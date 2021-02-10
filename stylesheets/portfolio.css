@@ -16,19 +16,41 @@ body{
 /*THIS SECTION CONTRIBUTES TO THE FASE EFFECT FOR THE PAGE THAT OCCURS WHEN THE PAGE IS LOADED*/
 body.fade-out{
     opacity: .1;/*This sets the level of opacity at the start of page load*/
+    transition: none;
 }
 
-/* HEADING 1 ELEMENTS */
-h1{
+/* The animation effect for moving the nav bar in from above the top of the screen upon page load */
+@keyframes moveNav {
+    from {left: -100vw;}
+    to {left: 0vw;}
+  }
+
+  /* The animation effect for moving the nav bar in from above the top of the screen upon page load */
+@keyframes movenavText {
+    from {top: -100vw;}
+    to {top: 0vw;}
+  }
+  
+  
+  /* This animation effect causes the overlay video text to move up from the bottom of the page upon page load */
+  @keyframes movevideoText {
+    from {top: -100vw;}
+    to {top: 0px;}
+  }
+
+
+/* HEADING 2 ELEMENTS */
+h2{
     text-transform: uppercase; /*Capitalises all h1 headings */
     font-family: "Trebuchet MS", Optima; /*sets the fonts family of all h1 headings*/
     text-align: center; /*centering all h1 elements*/
     margin-top: 3%; /* adds a small margin above h1 elements*/
     color: #1a1a1a;
+    
 }
 
-/*HEADING 1 ELEMENT HOVER EFFECT */
-h1:hover{
+/*HEADING 2 ELEMENT HOVER EFFECT */
+h2:hover{
     filter:grayscale(5%); /*adds a slightly gray filter to the h1  heading when hovered over*/
     transform: scale(1.1); /*When the h1 elements are hovered over they increase in size by 1.1*/
     transition: transform 1s; /*This causes the transformation to last 1 second*/
@@ -49,6 +71,12 @@ p{
     padding-left: 1vw; /*adds padding to the left of the paragraph element*/
     padding-right: 1vw; /*adds padding to the right of the paragraph element*/
     color: black;
+    
+}
+
+h1{
+    text-align: center;
+    color: white;
 }
 
 /*PARAGRAPH ELEMENT HOVER EFFECT*/
@@ -190,6 +218,15 @@ navbar*/
 .Navbar a.active{/*this targets the a element on the navbar with the "active"class*/
     background-color: #F7F3F3;
 }
+
+@keyframes zoomingoutsinglefeatured{
+    0%{
+        transform:scale(1.5,1.5);
+    }
+    100%{
+        transform: scale(1,1);
+    }
+}
 /***END OF NAVBAR STYLING***/
 
 /***VIDEO STYLING***/
@@ -200,11 +237,12 @@ navbar*/
     bottom:0;/*ensures no spacing betweeen the bottom of vid and page*/
     min-width: 100%;/*displays across the full width of page*/
     z-index: -1;/*places the video behind the other elements*/
+    animation: zoominoutsinglefeatured 5s;
 }
 /*screens that are 576 px and smaller will not display the background*/
 @media screen and (max-width:576px){
 #typing{
-    display: none;
+    display:block;
  }
 }
 #Video_Text{
@@ -214,13 +252,23 @@ navbar*/
     width:100%;/*ensures the video-text container fills the width of the video*/
     height: 100vh;/*ensures the video-text container filles the height of the viewport*/
     padding-top: 2vh;/*adds paddingt, background goes slightly beyond text*/
+    padding-bottom: 1vh;
+    margin: 23%;
     padding:2vh;/*this adds padding around the video-text container so that the
                     background goes slightly beyond the text*/
-    position:relative;/*this sets the text relative to its normal positioning
+    text-align: center;
+    /*position:relative;/*this sets the text relative to its normal positioning
                         allowing us to use the animation below*/
+    position: relative;
     -webkit-animation: moveVideoText 5.75s;
     animation: moveVideoText 5.75s;
 }
+
+.mySlides{
+    display: none;
+}
+
+
 
 /*this animation effect causes the overlay video text to move up from the bottom
 of the page upon page load*/
@@ -230,15 +278,17 @@ of the page upon page load*/
 }
 /***END OF VIDEO STYLING***/
 
-/***SLIDESHOW STYLING***/
+/*Slideshow Styling*/
 #Slideshow_Background{
-    background: rgba(255,255,255,0.35);/*creates a slightly transparent background over the video*/
+    background: rgba(255, 255, 255, 0.35);
 }
+
+
 .mySlides{
     display:none;/*this prevents the images from being displayed, we will us JS to display*/
 }
 /*Slideshow section/container*/
-#Slideshow_container{
+#Slideshow_Container{
     width: 39.5%;/*relative sizing of the container for the slideshow set to 39.5% of viewport width*/
     height: auto;/*the height of the container is automatically adjusted based on the contecnt it is displaying*/
     padding-top: 4%;/*Adds a small padding to the top of the slideshow container*/
@@ -249,9 +299,9 @@ of the page upon page load*/
 /*Images contained within the slideshow*/
 .Slideshow_Images{
     vertical-align:middle;/*this centers the imahes vertically within the slideshow container*/
-    height:400;/*The height of the images is automatically adjusted based on the content*/
+    height:auto;/*The height of the images is automatically adjusted based on the content*/
     box-shadow: 0px 5px 10px 12px rgba(0,0,0,.75);/*adds a shawdow around the slideshow images*/
-    width:400;/*The width of the images is automatically adjusted based on the content*/
+    width:auto;/*The width of the images is automatically adjusted based on the content*/
 }
 
 /*Next and previous buttons*/
@@ -270,7 +320,7 @@ of the page upon page load*/
 }
 
 /*Positioning the next button on the right hand side*/
-.next{
+.Next{
     right:0;/*This moves the next button to the right side of the slideshow container*/
     border-radius: 3px 0 0 3px; /*This changes the border radius on the next botton to the top and bottom left of the button*/
 }
@@ -283,18 +333,30 @@ of the page upon page load*/
 
 /*Slideshow text*/
 .text{
-    color:white;
+    color: white;
     padding:1vw;
-    position: center;/*this ensures the text is positioned within the image*/
+    position: absolute;/*this ensures the text is positioned within the image*/
     bottom:0;/*this property sets the text at the bottom of the image*/
     width: 100%;/*the element covers the full width of the image*/
     text-align: center;/*the text is center sligned within the image*/
     font-family: 'Courier New', Courier, monospace;
     letter-spacing: .1vw;
-    font-size: 1.0vw;/*font size is relative tp the viewport width*/
+    font-size: 1.2vw;/*font size is relative tp the viewport width*/
     font-weight: bold;
-    border-radius: 0px 0px 7px 7px;/*gives the text background rounded corners*/
+    background-color: #B79492;
+    border-radius: 7px 7px 7px 7px;/*gives the text background rounded corners*/
 }
+/* Number text (1/6, 2/6, etc.) - we have set this display to none, which means these are hidden */
+.Slide_Number {
+    color: white;
+    position: absolute;
+    top: 0;
+    font-family: Perpetua, Rockwell Extra Bold;
+    letter-spacing: .1vw; 
+    font-size: 1.5vw;
+    font-weight: bold;
+    display: none;
+    }
 
 /*Styling of the dots under the slideshow*/
 .dot{
@@ -344,9 +406,10 @@ of the page upon page load*/
     float: left;
     width:50%; /*this ensure the column takes up hald of the padge width*/
     padding: 10px;
-    padding-top:3%;/*this ensures there is space between the top of the column
+    padding-top:2%;/*this ensures there is space between the top of the column
                     and our headings*/
-    height: 400px; /*this sets the height of the column to 400px might be adjusted
+    padding-bottom: 3%;
+    height: 466px; /*this sets the height of the column to 400px might be adjusted
                     depending of the text that is entered*/
     background-color: #EAE1DF; /*sets the background color of columns with class column_1*/
 
@@ -365,7 +428,8 @@ column height*/
     width: 50%;
     padding:10px;
     padding-top:1.9%;
-    height:400px;
+    padding-bottom: 1.9%;
+    height:466px;
     background-color:#B79492;
 
 }
@@ -413,7 +477,7 @@ elements with class "row"*/
 
 /*Styling for the contact form*/
 .form-popup{
-    border:3px solid #f0f1f0;/*Creates a solid light gray border around the contact form*/
+    border:3px solid #815e5b;/*Creates a solid light gray border around the contact form*/
     z-index: 8;/*This z index ensures the contact for shows above all other elements of webpage*/
     display:none;/*set the display to none we will use js to show the contact form*/
     position: fixed;/*the form stays in the same location no matter what*/
@@ -424,7 +488,7 @@ elements with class "row"*/
 .form-container{
     max-width: 49vw;/*Relative sizing of the for container-49% of the viewport width*/
     padding: 1vw;/*adds padding between the form-popup and the form-container*/
-    background-color: white;
+    background-color: #815e5b;
 }
 /*Input Fields*/
 .form-container input[type=text]{
@@ -432,7 +496,7 @@ elements with class "row"*/
     padding: .93vw;/*adds padding to the input boxes*/
     margin: .6vw 0 .6vw 0;/*adds space between the input boxes and the labels*/
     border: none;/*Removes the border from the input boxes*/
-    background: gainsboro;/*sers the background color of the input boxes*/
+    background: #eae1df;/*sers the background color of the input boxes*/
     font-size: 1vw; /*Relative font sizing based on the width of the viewport*/
 }
 /*General styling for all buttons*/
@@ -452,29 +516,35 @@ button:hover, .form-container .btn:hover{
     background-color: black;/*The background of the button changes to black whe hovered over*/
     transition-duration: 1s;/*this makes the transition last 1 sec*/
     -webkit-transition-duration: 1s;/*for safari 4.0-8.0*/
-    border-color:silver;/*The border turns silver when the button is hovered over*/
+    border-color: gray;/*The border turns silver when the button is hovered over*/
 }
 /*Submit button*/
 .form-container .btn{
-    background-color: white;
+    background-color: #eae1df;
     color:black;
-    border-color:black;
+    border-color: gray;
     margin-bottom: 1vh; /*adds space between the dubmit button and the close button*/
 }
 /*Close button*/
 .form-container .cancel{
-    background-color:black;
+    background-color: #B79492;
     color:white;
     border-color: gray;
 }
 /*Styling for close button on hover*/
 .form-container .cancel:hover{
-    color:white;
-    background-color: darkred;
+    color: black;
+    background-color: #fec0aa;
     transition-duration: 1s;
     -webkit-transition-duration: 1s;
-    border-color:black;
+    border-color: gray;
 }
 /*****END OF POP UP CONTACT FORM STYLING******/
 
+/***FOOTER element ****/
+footer{
+    padding: 2%;
+    background-color: #fddbd4;
+    
+}
 
